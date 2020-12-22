@@ -2,6 +2,12 @@ pipeline {
   agent none
   stages {
     stage('Build') {
+	  when {
+		anyOf {
+		  branch 'master';
+		  changeRequest()
+		}
+	  }
       agent {
         docker {
           image 'maven:3.6.3-jdk-11-slim'
@@ -14,6 +20,12 @@ pipeline {
     }
 
     stage('Unit Tests') {
+	  when {
+		anyOf {
+		  branch 'master';
+		  changeRequest()
+		}
+	  }
       agent {
         docker {
           image 'maven:3.6.3-jdk-11-slim'
